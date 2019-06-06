@@ -6,7 +6,7 @@
 /*   By: mcouto <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 00:19:11 by mcouto            #+#    #+#             */
-/*   Updated: 2019/06/06 03:42:23 by mcouto           ###   ########.fr       */
+/*   Updated: 2019/06/06 03:51:03 by mcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,6 @@ int check_shape(char *tetramino)
 	if (t == 8 || t == 6)
 		return (1);
 	return (0);
-}
-
-int check_lines(char *tetramino)
-{
-	int double_nl;
-
-	double_nl = 0;
-	while (*tetramino!= '\0')
-	{
-		if (*tetramino == '\n' && *(tetramino + 1) == '\n')
-			double_nl++;
-	}
-	if (double_nl > 1)
-		return (0);
-	return (1);
 }
 
 int check_columns(char *tetramino)
@@ -117,8 +102,6 @@ int check_struct(char *tetramino)
 int	check_file_main(char *tetramino)
 {
 	if (check_struct(tetramino) == 0)
-		return (0);
-	if (check_lines(tetramino) == 0)
 		return (0);
 	if (check_columns(tetramino) == 0)
 		return (0);
