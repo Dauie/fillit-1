@@ -6,7 +6,7 @@
 /*   By: mcouto <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 00:19:11 by mcouto            #+#    #+#             */
-/*   Updated: 2019/06/06 00:39:30 by mcouto           ###   ########.fr       */
+/*   Updated: 2019/06/06 01:59:03 by mcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int check_shape(char *tetramino)
 		}
 		i++;
 	}
-	if (t == 5 || t == 8 || t == 6)
+	if (t == 8 || t == 6)
 		return (1);
 	return (0);
 }
@@ -54,11 +54,12 @@ int check_column(char *tetramino)
 	{
 		if (i == 4) //is in the 4th column
 		{
-			if (tetramino[i + 1] == '\n' || tetramino[i + 1] == '\0')
-				i = 1;
+			if (*tetramino == '\n')
+				i = -1; //because it must start counting again from "zero"
 			else
 				return (0);
 		}
+		tetramino++;
 		i++;
 	}
 	return (1);
