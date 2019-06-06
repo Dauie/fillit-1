@@ -6,7 +6,7 @@
 /*   By: mcouto <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 00:19:11 by mcouto            #+#    #+#             */
-/*   Updated: 2019/06/06 01:59:03 by mcouto           ###   ########.fr       */
+/*   Updated: 2019/06/06 03:42:23 by mcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,27 @@ int check_shape(char *tetramino)
 	return (0);
 }
 
-int check_column(char *tetramino)
+int check_lines(char *tetramino)
+{
+	int double_nl;
+
+	double_nl = 0;
+	while (*tetramino!= '\0')
+	{
+		if (*tetramino == '\n' && *(tetramino + 1) == '\n')
+			double_nl++;
+	}
+	if (double_nl > 1)
+		return (0);
+	return (1);
+}
+
+int check_columns(char *tetramino)
 {
 	int i;
 
 	i = 0;
-	while (tetramino[i] != '\0')
+	while (*tetramino != '\0')
 	{
 		if (i == 4) //is in the 4th column
 		{
@@ -103,7 +118,9 @@ int	check_file_main(char *tetramino)
 {
 	if (check_struct(tetramino) == 0)
 		return (0);
-	if (check_column(tetramino) == 0)
+	if (check_lines(tetramino) == 0)
+		return (0);
+	if (check_columns(tetramino) == 0)
 		return (0);
 	if (check_shape(tetramino) == 0)
 		return (0);
@@ -116,6 +133,7 @@ int main (int argc, char **argv)
 	char *tetramino;
 	int fd;
 	int buff_size = 21;
+	int i = 1;
 
 	if (argc != 2)
 		printf("USAGE");
@@ -126,10 +144,11 @@ int main (int argc, char **argv)
 		while (read(fd, tetramino, buff_size) > 0)
 		{
 			if (check_file_main(tetramino) == 1)
-				printf("tudo certo\n");
+				printf("%d.	tudo certo\n", i);
 			else 
-				printf("nada certo\n");
+				printf("%d.	nada certo\n", i);
 			ft_strclr(tetramino);
+			i++;
 		}
 	}
 }
