@@ -6,7 +6,7 @@
 /*   By: mcouto <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 00:19:11 by mcouto            #+#    #+#             */
-/*   Updated: 2019/06/05 06:06:44 by mcouto           ###   ########.fr       */
+/*   Updated: 2019/06/06 00:39:30 by mcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,36 +45,55 @@ int check_shape(char *tetramino)
 	return (0);
 }
 
+int check_column(char *tetramino)
+{
+	int i;
+
+	i = 0;
+	while (tetramino[i] != '\0')
+	{
+		if (i == 4) //is in the 4th column
+		{
+			if (tetramino[i + 1] == '\n' || tetramino[i + 1] == '\0')
+				i = 1;
+			else
+				return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 int check_struct(char *tetramino)
 {
-	int d;
-	int h;
-	int n;
+	int dots;
+	int hashtags;
+	int newlines;
 
-	d = 0;
-	h = 0;
-	n = 0;
+	dots = 0;
+	hashtags = 0;
+	newlines = 0;
 	while (*tetramino != '\0')
 	{
 		if (*tetramino != '.' && *tetramino != '#' && *tetramino != '\n')
 			return (0);
 		while (*tetramino == '.')
 		{
-			d++;
+			dots++;
 			tetramino++;
 		}
 		while (*tetramino == '#')
 		{
-			h++;
+			hashtags++;
 			tetramino++;
 		}
 		while (*tetramino == '\n')
 		{
-			n++;
+			newlines++;
 			tetramino++;
 		}
 	}
-	if (d == 12 && h == 4 && n >= 4)
+	if (dots == 12 && hashtags== 4 && newlines >= 4)
 		return (1);
 	return (0);
 }
@@ -82,6 +101,8 @@ int check_struct(char *tetramino)
 int	check_file_main(char *tetramino)
 {
 	if (check_struct(tetramino) == 0)
+		return (0);
+	if (check_column(tetramino) == 0)
 		return (0);
 	if (check_shape(tetramino) == 0)
 		return (0);
@@ -104,9 +125,10 @@ int main (int argc, char **argv)
 		while (read(fd, tetramino, buff_size) > 0)
 		{
 			if (check_file_main(tetramino) == 1)
-				printf("tudo certo");
+				printf("tudo certo\n");
 			else 
-				printf("nada certo");
+				printf("nada certo\n");
+			ft_strclr(tetramino);
 		}
 	}
 }
