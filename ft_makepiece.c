@@ -6,7 +6,7 @@
 /*   By: mcouto <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 05:38:29 by mcouto            #+#    #+#             */
-/*   Updated: 2019/06/07 01:29:56 by mcouto           ###   ########.fr       */
+/*   Updated: 2019/06/07 03:07:02 by mcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,21 +29,30 @@
 /*char *ft_clean_tetramino(int height, char *tetramino)
 {
 	
-}
-
-int ft_weight(char *tetramino)
-{
-	int weight;
-	int in_line;
-
-	in_line = 4;
-	width = 0;
-	while (in_line > 0)
-	{
-		while (*tetramino == "#")
-
-	}
 }*/
+
+int ft_width(char *tetramino)
+{
+	int hashtag;
+	int width;
+
+	hashtag = 0;
+	width = 0;
+	while (*tetramino)
+	{
+		while (*tetramino != '\n' && *tetramino != '\0')//so it reads each line per time
+		{
+			if (*tetramino == '#')
+				hashtag++;
+			tetramino++;
+		}
+		if (width < hashtag)//put the max value inside width
+			width = hashtag;
+		hashtag = 0;
+		tetramino++;
+	}
+	return (width);
+}
 
 int ft_height(char *tetramino)
 {
@@ -54,7 +63,7 @@ int ft_height(char *tetramino)
 	height = 0;
 	while (*tetramino)
 	{
-		while (*tetramino != '\n' && *tetramino != '\0')
+		while (*tetramino != '\n' && *tetramino != '\0')//so it reads each line per time
 		{
 			if (*tetramino == '#')
 				hashtag++;
@@ -81,7 +90,7 @@ int ft_height(char *tetramino)
 	}
 }*/
 
-int makepiece_main(char *tetramino)
+/*int makepiece_main(char *tetramino)
 {
 //	char *position;
 //	int width;
@@ -94,7 +103,7 @@ int makepiece_main(char *tetramino)
 //	if (!(position = ft_clean_tetramino(tetramino))
 //		return (0);
 
-}
+}*/
 
 int main (int argc, char **argv)
 {
@@ -111,7 +120,9 @@ int main (int argc, char **argv)
 		tetramino = ft_strnew(buff_size);
 		while (read(fd, tetramino, buff_size) > 0)
 		{
-			printf("height: %d\n", makepiece_main(tetramino));
+			printf("\n%s", tetramino);
+			printf("height: %d\n", ft_height(tetramino));
+			printf("width: %d\n_______\n", ft_width(tetramino));
 			ft_strclr(tetramino);
 			i++;
 		}
