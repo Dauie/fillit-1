@@ -6,7 +6,7 @@
 /*   By: mcouto <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 05:38:29 by mcouto            #+#    #+#             */
-/*   Updated: 2019/06/08 19:48:27 by mcouto           ###   ########.fr       */
+/*   Updated: 2019/06/09 03:23:12 by mcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,65 @@ int ft_is_special_case(char *tetramino)
 	return (0);
 }
 
-/*char *ft_cut_width(char *tetramino, int width)
+int index_start_width(char *tetramino)
 {
+	int start_width;
+	int first_hashtag_in_line;
 
-}*/
+	start_width = 5;
+	first_hashtag_in_line = 0;
+	while (*tetramino)
+	{
+		while (*tetramino != '\n' && *tetramino != '\0')
+		{
+			if (*tetramino == '#')
+				break;
+			tetramino++;
+			first_hashtag_in_line++;
+		}
+		if (start_width > first_hashtag_in_line && *tetramino == '#')
+			start_width = first_hashtag_in_line;
+		while (*tetramino == '#')
+		{
+			tetramino++;
+		}
+		first_hashtag_in_line = 0;
+		tetramino++;
+	}
+	return (start_width);
+}
+
+char *ft_cut_width(char *tetramino, int width, int height)
+{
+	char *cut_width;
+	int i;
+	int j;
+	int where_in_line;
+	int how_many_lines;
+	int only_this_size;
+
+	only_this_size = 0;
+	how_many_lines = 0;
+	j = 0;
+	where_in_line = index_start_width(tetramino);
+	cut_width = ft_strnew(height * width);
+	i = where_in_line;
+	while (how_many_lines < height)
+	{
+		while (tetramino[i] != '\n' && tetramino[i] != '\0' && only_this_size < width)
+		{
+			cut_width[j] = tetramino[i];
+			j++;
+			i++;
+			only_this_size++;
+		}
+		how_many_lines++;
+		i = where_in_line + (5 * how_many_lines);
+		only_this_size = 0;
+	}
+	return (&(cut_width[0]));
+}
+
 int ft_width(char *tetramino)
 {
 	char *only_special_case;
@@ -126,10 +181,12 @@ int main (int argc, char **argv)
 {
 	char *tetramino;
 	char *tmp;
+	char *tmp2;
 	int fd;
 	int buff_size = 21;
 	int i = 1;
 	int height;
+	int width;
 
 	if (argc != 2)
 		printf("USAGE");
@@ -144,10 +201,15 @@ int main (int argc, char **argv)
 			printf("height: %d\n", height);
 			tmp = tetramino;
 			tetramino = ft_cut_height(tetramino, height);
-			printf("this is the tetramino after the cut:\n%s", tetramino);
-			printf("width: %d\n_______\n", ft_width(tetramino));
+			printf("after cut height:\n%s", tetramino);
+			width = ft_width(tetramino);
+			printf("\nwidth: %d\n", width);
+			tmp2 = tetramino;
+			tetramino = ft_cut_width(tetramino, width, height);
+			printf("after cut width:\n%s\n_______\n", tetramino);
 			ft_strclr(tetramino);
 			ft_strdel(&tmp);
+			ft_strdel(&tmp2);
 			i++;
 		}
 	}
