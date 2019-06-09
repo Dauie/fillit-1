@@ -6,7 +6,7 @@
 /*   By: mcouto <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/06 05:38:29 by mcouto            #+#    #+#             */
-/*   Updated: 2019/06/08 03:22:10 by mcouto           ###   ########.fr       */
+/*   Updated: 2019/06/08 19:48:27 by mcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ int ft_width(char *tetramino)
 		hashtag = 0;
 		tetramino++;
 	}
-	only_special_case = NULL;
 	return (width);
 }
 
@@ -75,7 +74,7 @@ char *ft_cut_height(char *tetramino, int height)
 
 	cut_height = ft_strnew((5 * height)); // so it has the size of height * [(max_size of line) == 5] (counting the '\n')
 	start_of_hashtags = ft_strchr(tetramino, '#');
-	while (*start_of_hashtags != '\n')
+	while (*start_of_hashtags != '\n' && start_of_hashtags != &(tetramino[-1]))
 	{
 		start_of_hashtags--; //so i go back to the start of the line
 	}
