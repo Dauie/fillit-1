@@ -6,7 +6,7 @@
 /*   By: mcouto <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/06/05 00:19:11 by mcouto            #+#    #+#             */
-/*   Updated: 2019/06/06 03:51:03 by mcouto           ###   ########.fr       */
+/*   Updated: 2019/06/09 23:33:46 by mcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int	check_file_main(char *tetramino)
 int main (int argc, char **argv)
 {
 	char *tetramino;
+	char letter;
 	int fd;
 	int buff_size = 21;
 	int i = 1;
@@ -126,12 +127,13 @@ int main (int argc, char **argv)
 		tetramino = ft_strnew(buff_size);
 		while (read(fd, tetramino, buff_size) > 0)
 		{
-			if (check_file_main(tetramino) == 1)
+			if (check_file_main(tetramino, letter) == 1)
 				printf("%d.	tudo certo\n", i);
 			else 
 				printf("%d.	nada certo\n", i);
 			ft_strclr(tetramino);
 			i++;
+			letter++;
 		}
 	}
 }

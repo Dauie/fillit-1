@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_makepiece.c                                     :+:      :+:    :+:   */
+/*   ft_cut_piece.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mcouto <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/06/06 05:38:29 by mcouto            #+#    #+#             */
-/*   Updated: 2019/06/09 03:23:12 by mcouto           ###   ########.fr       */
+/*   Created: 2019/06/09 22:42:08 by mcouto            #+#    #+#             */
+/*   Updated: 2019/06/09 23:31:31 by mcouto           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include <stdio.h>
 #include <unistd.h>
@@ -162,22 +163,31 @@ int ft_height(char *tetramino)
 	return (height);
 }
 	
-/*int makepiece_main(char *tetramino)
+int main_cut_piece(char *tetramino)
 {
-	char *position;
 	int width;
 	int height;
+	char *tmp;
 
-	width = 4;
-	if(!(height = ft_height(tetramino)))
+	tmp = tetramino;
+	if (!(height = ft_height(tetramino)))
 		return (0);
-	return(height);
-	if (!(position = ft_clean_tetramino(tetramino))
+	if (!(tetramino = ft_cut_height(tetramino)))
 		return (0);
+	ft_strdel(&tmp);
+	if (!(width = ft_width(tetramino)))
+		return (0);
+	tmp = tetramino;
+	if(!(tetramino = ft_cut_width(tetramino)))
+		return (0);
+	ft_strdel(&tmp);
+	main_make_pice(
 
-}*/
+}
 
-int main (int argc, char **argv)
+/*TEST MAIN!!!!!!
+ *
+ * int main (int argc, char **argv)
 {
 	char *tetramino;
 	char *tmp;
@@ -213,4 +223,4 @@ int main (int argc, char **argv)
 			i++;
 		}
 	}
-}
+}*/
